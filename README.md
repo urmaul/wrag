@@ -57,3 +57,11 @@ jQuery(function($) {
     });
 });
 ```
+
+TODO
+----
+
+* Allow user to create several instances of Wrag grids
+* Refactor init method
+* Refactor url generation
+* Allow to edit default params
