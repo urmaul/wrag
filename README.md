@@ -1,6 +1,6 @@
-Pre-alpha. DO NOT use it
+Pre-alpha version. DO NOT use it
 ========================
 Wrag
 ====
 
-jqGrid wrapper with sugar
+jqGrid wrapper with sugar.
