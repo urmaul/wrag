@@ -29,14 +29,14 @@ jQuery(function($) {
             status: 'Status'
         },
         colModel:[
-            Grid.col.hidden({name:'idImage'}),
-            Grid.col.normal({name:'title', width:490, search: true}),
-            Grid.col.hidden({name:'idUser'}),
-            Grid.col.normal({name:'submitter', width:80}),
-            Grid.col.normal({name:'status', width:60}),
-            Grid.col.nonData({name:'hide', width:40}),
-            Grid.col.nonData({name:'edit', width:40}),
-            Grid.col.nonData({name:'delete', width:40})
+            Wrag.col.hidden({name:'idImage'}),
+            Wrag.col.normal({name:'title', width:490, search: true}),
+            Wrag.col.hidden({name:'idUser'}),
+            Wrag.col.normal({name:'submitter', width:80}),
+            Wrag.col.normal({name:'status', width:60}),
+            Wrag.col.nonData({name:'hide', width:40}),
+            Wrag.col.nonData({name:'edit', width:40}),
+            Wrag.col.nonData({name:'delete', width:40})
         ],
         caption: "Images",
         
