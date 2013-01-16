@@ -1,21 +1,16 @@
 var Wrag = {
-    init: function(params) {
-        var $grid = $('#grid');
+    init: function(params, $grid) {
+        if (!$grid)
+            $grid = $('#grid');
         var controllerUrl = '/' + params.controller + '/';
         
         // Setting labels
         if (!params.colNames && params.labels) {
-            var colNames = [];
-            
-            for (var i=0; i<params.colModel.length; ++i) {
-                var name = params.colModel[i].name;
-                colNames.push(params.labels[name] ? params.labels[name] : '');
-            }
-            
-            params.colNames = colNames;
+            params.colNames = Wrag.makeColNames(params.colModel, params.labels);
+            delete params.labels;
         }
         
-        $grid .jqGrid({
+        var jqGridConfig = $.extend({
             url: controllerUrl + 'grid',
             datatype: 'json',
             colNames: params.colNames,
@@ -46,19 +41,9 @@ var Wrag = {
                 $grid .jqGrid('setRowData', rowId, cols);
             },
             gridComplete: params.gridComplete
-        });
+        }, params);
         
-        $grid .click(function(e) {
-            var $target = $(e.target);
-            
-            if ($target .is('a.delete')) {
-                $.post(
-                    controllerUrl + 'delete',
-                    {id: $target .attr('data-id')},
-                    Wrag.reload
-                );
-            }
-        });
+        $grid .jqGrid( jqGridConfig );
         
         for (var i=0; i<params.colModel.length; ++i) {
             if (params.colModel[i].search) {
@@ -72,6 +57,17 @@ var Wrag = {
                 break;
             }
         }
+    },
+    
+    makeColNames: function(colModel, labels) {
+        var colNames = [];
+            
+        for (var i=0; i<colModel.length; ++i) {
+            var name = colModel[i].name;
+            colNames.push(labels[name] ? labels[name] : '');
+        }
+
+        return colNames;
     },
     
     reload: function () {
@@ -127,3 +123,7 @@ var Wrag = {
         }
     }
 };
+
+$.fn.wrag = function(params) {
+    Wrag.init(params, this);
+}
