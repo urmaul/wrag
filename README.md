@@ -13,6 +13,10 @@ Features
 * Columns with JS-generated content
 * Automatically opening filter toolbar
 
+## Events
+
+* onCellClick(rowid, column, cellcontent, e) - same as onCellSelect, but second attribute is column name (not column index).
+
 Examples
 --------
 

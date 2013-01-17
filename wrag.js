@@ -5,23 +5,22 @@ var Wrag = {
         var controllerUrl = '/' + params.controller + '/';
         
         // Setting labels
-        if (!params.colNames && params.labels) {
+        if (!params.colNames && params.labels)
             params.colNames = Wrag.makeColNames(params.colModel, params.labels);
-            delete params.labels;
-        }
+        
+        var colOffset =
+            (params.multiselect ? 1 : 0) +
+            (params.subGrid ? 1 : 0);
         
         var jqGridConfig = $.extend({
             url: controllerUrl + 'grid',
             datatype: 'json',
-            colNames: params.colNames,
-            colModel: params.colModel,
             rowNum: 10,
-            rowList: [10,20,30],
+            rowList: [10, 25, 50],
             pager: '#pager',
-            sortname: params.sortname ? params.sortname : params.pk,
+            sortname: params.pk,
             viewrecords: true,
             sortorder: 'desc',
-            caption:  params.caption,
             
             afterInsertRow: function(rowId, rowData, rowElem)
             {
@@ -40,7 +39,12 @@ var Wrag = {
                 }
                 $grid .jqGrid('setRowData', rowId, cols);
             },
-            gridComplete: params.gridComplete
+            onCellSelect: function(rowid, iCol, cellcontent, e) {
+                if (params.onCellClick) {
+                    var column = params.colModel[iCol - colOffset].name;
+                    params.onCellClick(rowid, column, cellcontent, e);
+                }
+            }
         }, params);
         
         $grid .jqGrid( jqGridConfig );
@@ -104,10 +108,10 @@ var Wrag = {
     
     colGenerators: {
         edit: function(params, rowId, rowData) {
-            return '<a href="/' + params.controller + '/edit?' + params.pk + '=' + rowData[params.pk] + '">Edit</a>';;
+            return '<a href="/' + params.controller + '/edit?' + params.pk + '=' + rowData[params.pk] + '">Edit</a>';
         },
         'delete': function(params, rowId, rowData) {
-            return '<a class="delete" data-id="' + rowData[params.pk] + '">Delete</a>';;
+            return '<a class="delete" data-id="' + rowData[params.pk] + '">Delete</a>';
         }
     },
     
