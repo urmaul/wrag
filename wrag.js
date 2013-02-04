@@ -40,7 +40,7 @@ var Wrag = {
                 $grid .jqGrid('setRowData', rowId, cols);
             },
             onCellSelect: function(rowid, iCol, cellcontent, e) {
-                if (params.onCellClick) {
+                if (params.onCellClick && iCol - colOffset >= 0) {
                     var column = params.colModel[iCol - colOffset].name;
                     params.onCellClick(rowid, column, cellcontent, e);
                 }
